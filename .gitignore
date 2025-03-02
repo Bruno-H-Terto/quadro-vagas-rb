@@ -35,3 +35,8 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Ignore files log for database
+/docker/tmp/*
+!/docker/tmp/
+!/docker/tmp/.keep
