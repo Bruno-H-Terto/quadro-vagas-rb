@@ -23,6 +23,13 @@ require 'capybara/cuprite'
 # of increasing the boot-up time by auto-requiring all files in the support
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
+require 'dotenv'
+Dotenv.load('.env.test')
+
+Capybara.server_host = ENV.fetch('CAPYBARA_SERVER_HOST', '0.0.0.0')
+Capybara.server_port = ENV.fetch('CAPYBARA_SERVER_PORT', '4000')
+Capybara.app_host = ENV.fetch('CAPYBARA_APP_HOST', "http://127.0.0.1:#{Capybara.server_port}")
+
 #
 Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
 
@@ -39,8 +46,14 @@ RSpec.configure do |config|
     driven_by :rack_test
   end
 
-  config.before(type: :system, js: true) do
-    driven_by(:cuprite)
+  config.before(:each, type: :system, js: true) do
+    driven_by(:cuprite, screen_size: [ 1440, 810 ], options: {
+      js_errors: false,
+      headless: %w[0],
+      process_timeout: 15,
+      timeout: 10,
+      browser_options: { "no-sandbox" => nil }
+    })
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
