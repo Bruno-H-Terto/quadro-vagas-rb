@@ -9,6 +9,7 @@
 
 # Ignore all environment files.
 /.env*
+!/.env.development
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -40,3 +41,6 @@
 /docker/tmp/*
 !/docker/tmp/
 !/docker/tmp/.keep
+
+# Ignore coverage
+/coverage/*

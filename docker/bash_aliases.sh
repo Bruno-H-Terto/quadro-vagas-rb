@@ -1,15 +1,18 @@
+# Define a global alias for the base command
+alias -g BASE='docker compose -f "docker-compose.development.yml"'
+
 # Development commands
 # Build image
-alias docker-build='docker compose -f "docker-compose.development.yml" build'
+alias docker-build='BASE build'
 
 # Run project
-alias docker-up='docker compose -f "docker-compose.development.yml" up'
+alias docker-up='BASE up'
 
 # Run project in detached mode
-alias docker-up-d='docker compose -f "docker-compose.development.yml" up -d'
+alias docker-up-d='BASE up -d'
 
 # Stop containers
-alias docker-down='docker compose -f "docker-compose.development.yml" down'
+alias docker-down='BASE down'
 
 # Stop all containers
 alias docker-stop='docker stop $(docker ps -aq)'
@@ -19,17 +22,19 @@ alias docker-rmi='docker rmi -f $(docker images -aq)'
 
 # Rails specific commands
 # Run rails related commands
-alias docker-rails='docker compose -f "docker-compose.development.yml" exec web bundle exec rails'
+alias docker-rails='BASE exec web bundle exec rails'
+
+# Run bundle related commands
+alias docker-bundle='BASE exec web bundle'
 
 # Alias to run rake related commands
-alias docker-rake='docker compose -f "docker-compose.development.yml" exec web bundle exec rake'
+alias docker-rake='BASE exec web bundle exec rake'
 
 # Alias to start the Rails console
-alias docker-console='docker compose -f "docker-compose.development.yml" exec web rails console'
+alias docker-console='BASE exec web rails console'
 
 # Alias to run Rubocop
-alias docker-rubocop='docker compose -f "docker-compose.development.yml" exec web bundle exec rubocop'
+alias docker-rubocop='BASE exec web bundle exec rubocop'
 
 # Alias to run RSpec tests
-alias docker-rspec='docker compose -f "docker-compose.development.yml" exec web bundle exec rspec'
-
+alias docker-rspec='BASE exec web bundle exec rspec'
