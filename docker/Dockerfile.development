@@ -1,0 +1,44 @@
+FROM ruby:3.4.2 AS build
+
+RUN apt-get update && \
+    apt-get install -y \
+    build-essential \
+    nodejs \
+    libjemalloc2 \
+    libvips \
+    sqlite3 \
+    pkg-config \
+    curl \
+    imagemagick \
+    libmagickwand-dev \
+    libsqlite3-dev \
+    git \
+    wget \
+    gnupg2 \
+    apt-transport-https \
+    ca-certificates
+
+FROM ruby:3.4.2 AS runner
+
+RUN apt-get update && \
+    apt-get install -y \
+    libpq-dev \
+    watchman \
+    chromium
+
+RUN gem install bundle
+
+RUN rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+
+WORKDIR /home/app/web
+
+COPY . ./
+
+COPY config/setup_app.sh /home/app/web/config/setup_app.sh
+RUN chmod +x /home/app/web/config/setup_app.sh
+
+RUN bundle install
+
+RUN gem install foreman
+
+RUN rm -rf tmp/*
