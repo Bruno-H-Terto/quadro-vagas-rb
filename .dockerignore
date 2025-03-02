@@ -1,0 +1,4 @@
+.git/*
+docker/*
+!docker/*entrypoint*
+node_modules/*
