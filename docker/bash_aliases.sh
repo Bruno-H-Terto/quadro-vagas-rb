@@ -1,6 +1,13 @@
 # Define a global alias for the base command
 alias -g BASE='docker compose -f "docker-compose.development.yml"'
 
+docker-clean(){
+  docker stop $(docker ps -aq)
+  docker rmi -f $(docker images -aq)
+  rm ./docker/development/tmp/.db-created
+  rm ./docker/development/tmp/.db-seeded
+}
+
 # Development commands
 # Build image
 alias docker-build='BASE build'

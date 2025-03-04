@@ -3,7 +3,7 @@ networks:
 
 services:
   db:
-    image: postgres:14
+    image: postgres:14-alpine
     container_name: postgres_db
     tty: true
     volumes:
@@ -23,11 +23,12 @@ services:
       - backend
 
   web:
+    container_name: rails_app
     build:
       context: .
-      dockerfile: docker/Dockerfile.development
+      dockerfile: docker/development/Dockerfile
     tty: true
-    command: bash -c "bash config/setup_app.sh"
+    command: sh -c "sh bin/setup_app.sh"
     volumes:
       - .:/home/app/web
     environment:

@@ -38,9 +38,9 @@
 !/app/assets/builds/.keep
 
 # Ignore files log for database
-/docker/tmp/*
-!/docker/tmp/
-!/docker/tmp/.keep
+/docker/development/tmp/*
+!/docker/development/tmp/
+!/docker/development/tmp/.keep
 
 # Ignore coverage
 /coverage/*
