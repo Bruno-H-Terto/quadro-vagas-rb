@@ -1,47 +1,33 @@
 # syntax=docker/dockerfile:1
 
 # Base
-FROM ruby:3.4.2-alpine AS base
+FROM ruby:3.4.2-slim AS base
 
-RUN apk update && apk upgrade && \
-    apk add --no-cache --virtual \
-    build-base \
+RUN apt-get update && \
+    apt-get install -y \
+    build-essential \
     nodejs \
-    vips-dev \
-    pkgconfig \
-    curl \
+    libvips-dev \
     imagemagick \
-    git \
-    gnupg \
-    bash
+    libmagickwand-dev \
+    gnupg2 \
+    && rm -rf /var/lib/apt/lists/*
 
-# Essentials libs
-FROM ruby:3.4.2-alpine AS build
+# Build
+FROM ruby:3.4.2-slim AS build
 
-RUN apk update && apk upgrade && \
-    apk add --no-cache \
-    postgresql-dev \
-    postgresql \
+RUN apt-get update && \
+    apt-get install -y \
+    libpq-dev \
+    watchman \
     chromium \
-    make \
-    yaml-dev \
-    sudo
-
-# Watchman
-# Watchman version
-ARG WM_VERSION=v2021.03.01.00
-
-# install watchman
-RUN wget https://github.com/facebook/watchman/releases/download/$WM_VERSION/watchman-$WM_VERSION-linux.zip && \
-    unzip watchman-$WM_VERSION-linux.zip && \
-    cd watchman-$WM_VERSION-linux && \
-    mkdir -p /usr/local/{bin,lib} /usr/local/var/run/watchman && \
-    cp bin/* /usr/local/bin && \
-    cp lib/* /usr/local/lib && \
-    chmod 755 /usr/local/bin/watchman && \
-    chmod 2777 /usr/local/var/run/watchman && \
-    cd .. && \
-    rm -fr watchman-$WM_VERSION-linux.zip watchman-$WM_VERSION-linux
+    sudo \
+    build-essential \
+    libssl-dev \
+    libreadline-dev \
+    zlib1g-dev \
+    libyaml-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Runner
 FROM build AS runner
@@ -50,8 +36,8 @@ FROM build AS runner
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 
-RUN addgroup -g ${GROUP_ID} appuser && \
-    adduser -u ${USER_ID} -G appuser -h /home/appuser -D appuser && \
+RUN addgroup --gid ${GROUP_ID} appuser && \
+    adduser --uid ${USER_ID} --gid ${GROUP_ID} --home /home/appuser --disabled-password --gecos "" appuser && \
     echo "appuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER appuser
@@ -72,4 +58,4 @@ RUN bundle install
 
 # Remove tmp files
 RUN sudo rm -rf tmp/* && \
-    sudo rm -rf /var/cache/apk/*
+    sudo rm -rf /var/cache/apt/*

@@ -1,6 +1,7 @@
 # Define a global alias for the base command
 alias -g BASE='docker compose -f "docker-compose.development.yml"'
 
+# Clean all images e container
 docker-clean(){
   docker stop $(docker ps -aq)
   docker rmi -f $(docker images -aq)

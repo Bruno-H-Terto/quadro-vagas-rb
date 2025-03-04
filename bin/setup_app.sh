@@ -12,6 +12,7 @@ fi
 
 bin/rails db:migrate
 
+current_date=$(date "+%Y-%m-%d %H:%M:%S")
 if ! [[ -f ./docker/development/tmp/.db-seeded ]]; then
   bin/rails db:seed && echo "Seeded database in $current_date UTC" >> ./docker/development/tmp/.db-seeded
 fi
