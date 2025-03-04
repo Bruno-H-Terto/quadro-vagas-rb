@@ -71,5 +71,5 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
 
   config.hosts << ENV.fetch("SERVER_HOST", "0.0.0.0")
-  config.web_console.whitelisted_ips = '0.0.0.0/0'
+  config.web_console.whitelisted_ips = "0.0.0.0/0"
 end
