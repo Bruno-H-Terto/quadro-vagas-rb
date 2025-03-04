@@ -2,3 +2,12 @@
 docker/*
 !docker/*entrypoint*
 node_modules/*
+
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
