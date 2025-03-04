@@ -1,39 +1,36 @@
-name: CI
+name: CI with Test Containers
 
 on:
-  pull_request:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  scan_js:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bin/importmap audit
-
   lint:
+    name: Run Rubocop
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
+      - name: Run Linter
+        run: |
+          docker compose -f "docker-compose.development.yml" build -q
+          docker compose -f "docker-compose.development.yml" run --rm --remove-orphans web bundle exec rubocop
 
-      - name: Lint code for consistent style
-        run: bin/rubocop -f github
+  tests:
+    name: Run RSpec Tests
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Test
+        run: |
+          docker compose -f "docker-compose.development.yml" build -q
+          touch log/test.log tmp/local_secret.txt
+          chmod 0664 log/test.log tmp/local_secret.txt
+          docker compose -f "docker-compose.development.yml" run --rm --remove-orphans web bundle exec rspec
 
