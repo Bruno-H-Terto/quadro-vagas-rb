@@ -55,6 +55,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set permissions for runner user
+        run: sudo chown -R 1000:1000 /home/app/web && sudo chmod -R u+rwX /home/app/web
+
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1.221.0
         with:
