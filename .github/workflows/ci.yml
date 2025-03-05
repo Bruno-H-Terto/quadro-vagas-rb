@@ -40,4 +40,6 @@ jobs:
           docker compose -f "docker-compose.development.yml" ps
 
       - name: Run RSpec Tests
-        run: docker exec -u appuser rails_app bundle exec rspec
+        run: |
+          docker exec -u appuser rails_app bundle exec rspec
+          sudo chown -R $(whoami) .git
