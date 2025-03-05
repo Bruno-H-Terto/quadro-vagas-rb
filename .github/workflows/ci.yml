@@ -55,11 +55,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set permissions for runner user
-        run: |
-          sudo chmod -R a+rwX .
-          whoami
-
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@v1.221.0
         with:
@@ -69,7 +64,4 @@ jobs:
         run: bin/rails db:schema:load
 
       - name: Run tests
-        run: |
-          bin/rake spec
-          ls
-          ls coverage/
+        run: bin/rake spec
