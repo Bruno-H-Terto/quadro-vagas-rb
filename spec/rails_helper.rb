@@ -1,3 +1,9 @@
+require 'simplecov'
+SimpleCov.start 'rails' do
+  add_filter 'jobs'
+  add_filter 'mailers'
+end
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV']||= 'test'
@@ -23,11 +29,6 @@ require 'capybara/cuprite'
 # of increasing the boot-up time by auto-requiring all files in the support
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
-require 'simplecov'
-SimpleCov.start 'rails' do
-  add_filter 'jobs'
-  add_filter 'mailers'
-end
 
 require 'dotenv'
 Dotenv.load('.env.test')
