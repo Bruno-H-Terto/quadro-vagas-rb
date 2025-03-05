@@ -57,8 +57,6 @@ jobs:
 
       - name: Set permissions for runner user
         run: |
-          ls
-          ls -l coverage
           sudo chmod -R a+rwX .
           whoami
 
@@ -71,4 +69,7 @@ jobs:
         run: bin/rails db:schema:load
 
       - name: Run tests
-        run: bin/rake spec
+        run: |
+          bin/rake spec
+          ls
+          ls coverage/
