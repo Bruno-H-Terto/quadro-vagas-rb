@@ -8,15 +8,16 @@ default: &default
 
 
 development:
-  <<: *default
-  database: quadrovagas-development
+  primary:
+    <<: *default
+    database: quadrovagas-development
   queue:
     <<: *default
     database: storage/quadrovagas-development_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *default
-    database: storage/development_cable.sqlite3
+    database: storage/development_cable
     migrations_paths: db/cable_migrate
 
 
