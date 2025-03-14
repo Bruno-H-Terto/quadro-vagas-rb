@@ -13,20 +13,19 @@ development:
     database: quadrovagas-development
   queue:
     <<: *default
-    database: storage/quadrovagas-development_queue
+    database: quadrovagas-development
     migrations_paths: db/queue_migrate
   cable:
     <<: *default
-    database: storage/development_cable
+    database: storage/quadrovagas-development_cable
     migrations_paths: db/cable_migrate
-
 
 test:
   <<: *default
   database: quadrovagas-test
   queue:
     <<: *default
-    database: storage/quadrovagas-test_queue
+    database: quadrovagas-test
     migrations_paths: db/queue_migrate
 
 production:
