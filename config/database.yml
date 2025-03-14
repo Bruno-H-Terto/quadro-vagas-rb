@@ -10,11 +10,23 @@ default: &default
 development:
   <<: *default
   database: quadrovagas-development
+  queue:
+    <<: *default
+    database: storage/quadrovagas-development_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default
+    database: storage/development_cable.sqlite3
+    migrations_paths: db/cable_migrate
 
 
 test:
   <<: *default
   database: quadrovagas-test
+  queue:
+    <<: *default
+    database: storage/quadrovagas-test_queue
+    migrations_paths: db/queue_migrate
 
 production:
   <<: *default
