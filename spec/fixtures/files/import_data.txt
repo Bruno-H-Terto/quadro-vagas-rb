@@ -1,0 +1,7 @@
+U,usuario1@example.com
+E,Empresa A,https://www.empresa-a.com,contato@empresa-a.com,1
+V,Desenvolvedor Ruby on Rails,5000,brl,monthly,remote,1,São Paulo,2,1
+H,usuario2@example.com
+U,usuario1.com
+E,,https://www.empresa-a.com,contato@empresa-a.com,
+V,Desenvolvedor Ruby on Rails,R$ 5000,brl,monthly,,1,São Paulo,,

@@ -1,8 +1,8 @@
-class RunLineCommandsJob < ApplicationJob
+class ProcessImportLineJob < ApplicationJob
   queue_as :default
 
   def perform(command:, line:, imported_file: imported_file)
-    type, instruction = FormatInstructionService.call(command)
+    type, instruction = ParseImportCommandService.call(command)
     new_record = run_command(type: type, instruction: instruction)
     report_generate(new_record: new_record,command: command, line: line, imported_file: imported_file)
   end
@@ -31,9 +31,9 @@ class RunLineCommandsJob < ApplicationJob
     JobPosting.new(**instruction)
   end
 
-  def report_generate(new_record = false, command:, line:, imported_file:)
-    report = imported_file.report_import_lines.build(line: line, command: command)
-    if new_record.save
+  def report_generate(new_record, command:, line:, imported_file:)
+    report = imported_file.import_line_reports.build(line: line, command: command)
+    if new_record&.save
       report.success!
     else
       report.failed!

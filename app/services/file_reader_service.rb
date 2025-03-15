@@ -1,4 +1,4 @@
-class OpenFileService < ApplicationService
+class FileReaderService < ApplicationService
   def call
     run
   end
