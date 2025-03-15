@@ -80,14 +80,14 @@ U,usuario27@example.com,password123,password123,Roberta,Silveira
 E,Empresa AA,https://www.empresa-aa.com,contato@empresa-aa.com,28
 V,Desenvolvedor Kotlin,7800,brl,monthly,remote,1,Belo Horizonte,2,27,Dev. Kotlin para desenvolvimento de aplicativos Android
 U,usuario28@example.com,password456,password456,Paulo,Alves
-E,Empresa BB,https://www.empresa-bb.com,contato@empresa-bb.com,29
-V,Desenvolvedor Ruby on Rails,8000,brl,monthly,hybrid,2,Rio de Janeiro,3,28,Procuramos Dev. Ruby on Rails com experiência em APIs RESTful
-U,usuario27@example.com,password123,password123,Roberta,Silveira
+E,Empresa BB,https://www.empresa-bb.com,contato@empresa-bb.com,29U,usuario27@example.com,password123,password123,Roberta,Silveira
 E,Empresa AA,https://www.empresa-aa.com,contato@empresa-aa.com,28
 V,Desenvolvedor Kotlin,7800,brl,monthly,remote,1,Belo Horizonte,2,27,Dev. Kotlin para desenvolvimento de aplicativos Android
 U,usuario28@example.com,password456,password456,Paulo,Alves
 E,Empresa BB,https://www.empresa-bb.com,contato@empresa-bb.com,29
-V,Desenvolvedor Ruby on Rails,8000,brl,monthly,hybrid,2,Rio de Janeiro,3,28,Procuramos Dev. Ruby on Rails com experiência em APIs RESTfulU,usuario27@example.com,password123,password123,Roberta,Silveira
+V,Desenvolvedor Ruby on Rails,8000,brl,monthly,hybrid,2,Rio de Janeiro,3,28,Procuramos Dev. Ruby on Rails com experiência em APIs RESTful
+V,Desenvolvedor Ruby on Rails,8000,brl,monthly,hybrid,2,Rio de Janeiro,3,28,Procuramos Dev. Ruby on Rails com experiência em APIs RESTful
+U,usuario27@example.com,password123,password123,Roberta,Silveira
 E,Empresa AA,https://www.empresa-aa.com,contato@empresa-aa.com,28
 V,Desenvolvedor Kotlin,7800,brl,monthly,remote,1,Belo Horizonte,2,27,Dev. Kotlin para desenvolvimento de aplicativos Android
 U,usuario28@example.com,password456,password456,Paulo,Alves

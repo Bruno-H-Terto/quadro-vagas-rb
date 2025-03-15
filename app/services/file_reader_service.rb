@@ -6,11 +6,13 @@ class FileReaderService < ApplicationService
   private
   
   def run
-    file_path = kwargs[:file]
-    file_data = file_path.import_data.download
-    file = StringIO.new(file_data)
-    file.rewind
+    imported_file = kwargs[:imported_file]
+    file_data = imported_file.data.download
+    text_data = StringIO.new(file_data)
+    total_lines = text_data.read.lines.count
+    imported_file.update(total_lines: total_lines)
+    text_data.rewind
 
-    file
+    text_data
   end
 end

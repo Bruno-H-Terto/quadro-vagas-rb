@@ -1,0 +1,7 @@
+<div>
+  <% imported_file.import_line_reports.each do |report_line| %>
+    <div id="import_line_reports">
+      <%= report_line.line %> - <%= report_line.status %> <%= report_line.command %> <%= report_line.message.presence || '...' %>
+    </div>
+  <% end %>
+</div>

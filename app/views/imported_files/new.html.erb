@@ -1,0 +1,12 @@
+<%= form_with(model: @imported_file) do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.file_field :data %>
+  </div>
+
+  <%= f.submit %>
+<% end %>

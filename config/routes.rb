@@ -25,4 +25,5 @@ Rails.application.routes.draw do
   resources :company_profiles, only: [ :show, :new, :create ]
   resources :job_postings, only: %i[show new create]
   get "search", to: "home#search", as: :search_jobs, param: :query
+  resources :imported_files, only: %i[ new create show ]
 end
