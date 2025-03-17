@@ -37,11 +37,11 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 RSpec.configure do |config|
-  config.include ActiveJob::TestHelper, type: :job
+  config.include ActiveJob::TestHelper
   config.before(:each) do
     ActiveJob::Base.queue_adapter = :test
   end
-  
+
   config.before(:each, type: :system) do
     driven_by(:rack_test)
   end

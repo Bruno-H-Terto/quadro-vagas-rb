@@ -1,0 +1,13 @@
+pt-BR:
+  activerecord:
+    models:
+      imported_file:
+        one: Base importada
+        others: Bases importadas
+    attributes:
+      imported_file:
+        name: Nome
+        data: Base
+  errors:
+    messages:
+      invalid_file_format: 'de dados inválida. Formatos permitidos: .txt e .csv'

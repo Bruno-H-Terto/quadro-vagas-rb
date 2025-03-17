@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_15_061511) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_17_133321) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -70,14 +70,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_15_061511) do
     t.integer "status", default: 0
   end
 
-  create_table "import_files", force: :cascade do |t|
-    t.string "name"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_import_files_on_user_id"
-  end
-
   create_table "import_line_reports", force: :cascade do |t|
     t.integer "status", default: 0
     t.integer "line"
@@ -95,13 +87,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_15_061511) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.integer "complete_lines", default: 0
+    t.integer "success_user", default: 0
+    t.integer "success_company_profile", default: 0
+    t.integer "success_job_posting", default: 0
     t.index ["user_id"], name: "index_imported_files_on_user_id"
   end
 
   create_table "job_postings", force: :cascade do |t|
     t.string "title"
     t.bigint "company_profile_id", null: false
-    t.integer "salary"
+    t.decimal "salary"
     t.integer "salary_currency"
     t.integer "salary_period"
     t.datetime "created_at", null: false
@@ -119,27 +115,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_15_061511) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "line_import_statuses", force: :cascade do |t|
-    t.string "message"
-    t.integer "line"
-    t.bigint "record_import_file_id", null: false
-    t.integer "status", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "command"
-    t.index ["record_import_file_id"], name: "index_line_import_statuses_on_record_import_file_id"
-  end
-
-  create_table "record_import_files", force: :cascade do |t|
-    t.bigint "import_file_id", null: false
-    t.text "record_text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "total_lines", default: 0
-    t.integer "complete_lines", default: 0
-    t.index ["import_file_id"], name: "index_record_import_files_on_import_file_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -272,37 +247,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_15_061511) do
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
-  create_table "taggings", force: :cascade do |t|
-    t.bigint "tag_id"
-    t.string "taggable_type"
-    t.bigint "taggable_id"
-    t.string "tagger_type"
-    t.bigint "tagger_id"
-    t.string "context", limit: 128
-    t.datetime "created_at", precision: nil
-    t.string "tenant", limit: 128
-    t.index ["context"], name: "index_taggings_on_context"
-    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
-    t.index ["tag_id"], name: "index_taggings_on_tag_id"
-    t.index ["taggable_id", "taggable_type", "context"], name: "taggings_taggable_context_idx"
-    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
-    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
-    t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable_type_and_taggable_id"
-    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
-    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
-    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
-    t.index ["tagger_type", "tagger_id"], name: "index_taggings_on_tagger_type_and_tagger_id"
-    t.index ["tenant"], name: "index_taggings_on_tenant"
-  end
-
-  create_table "tags", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "taggings_count", default: 0
-    t.index ["name"], name: "index_tags_on_name", unique: true
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email_address", null: false
     t.string "password_digest", null: false
@@ -317,14 +261,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_15_061511) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "company_profiles", "users"
-  add_foreign_key "import_files", "users"
   add_foreign_key "import_line_reports", "imported_files"
   add_foreign_key "imported_files", "users"
   add_foreign_key "job_postings", "company_profiles"
   add_foreign_key "job_postings", "experience_levels"
   add_foreign_key "job_postings", "job_types"
-  add_foreign_key "line_import_statuses", "record_import_files"
-  add_foreign_key "record_import_files", "import_files"
   add_foreign_key "sessions", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
@@ -332,5 +273,4 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_15_061511) do
   add_foreign_key "solid_queue_ready_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
-  add_foreign_key "taggings", "tags"
 end

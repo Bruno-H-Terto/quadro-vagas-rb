@@ -9,7 +9,7 @@ describe ProcessImportedFileJob, type: :job do
     expect(enqueued_jobs.size).to eq(1)
   end
 
-  it 'queued a job for each line in batchs' do
+  it 'should queue a job for each line in batches' do
     admin = create(:user, role: 'admin')
     file = Rails.root.join('./spec/fixtures/files/import_data.txt')
     imported_file = admin.imported_files.build(name: 'Relatório Trimestral')

@@ -1,11 +1,13 @@
 require "rails_helper"
 
 describe ProcessImportLineJob, type: :job do
-  it "should be queued when user sends intruction line" do
+  it "should be queued when user sends instruction line" do
     admin = create(:user, role: "admin")
+    file = Rails.root.join("./spec/fixtures/files/import_data.txt")
     imported_file = admin.imported_files.build(name: "Relatório Trimestral")
+    imported_file.data.attach(io: File.open(file), filename: "import_data.txt")
     imported_file.save!
-    batch = [ "U,usuario1@example.com" ]
+    batch = ["U,usuario1@example.com"]
     line = 1
 
     ProcessImportedFileJob.perform_later(batch: batch, line: line, imported_file: imported_file)
@@ -13,48 +15,50 @@ describe ProcessImportLineJob, type: :job do
     expect(enqueued_jobs.size).to eq(1)
   end
 
-  it "should create a user and report success, when received correct instructions" do
+  it "should create a user and report success when correct instructions are received" do
     admin = create(:user, role: "admin")
+    file = Rails.root.join("./spec/fixtures/files/import_data.txt")
     imported_file = admin.imported_files.build(name: "Relatório Trimestral")
+    imported_file.data.attach(io: File.open(file), filename: "import_data.txt")
     imported_file.save!
-    first_batch = [ "U,usuario1@example.com, password456, password456, Fulano, da Silva" ]
+    first_batch = ["U,usuario1@example.com, password456, password456, Fulano, da Silva"]
 
     ProcessImportLineJob.perform_now(batch: first_batch, line: 1, imported_file: imported_file)
 
     user = User.last
     report_line = ImportLineReport.last
-    expect(user.email_address).to eq "usuario1@example.com"
-    expect(user.name).to eq "Fulano"
-    expect(user.last_name).to eq "da Silva"
-    expect(report_line.command).to eq "U,usuario1@example.com, password456, password456, Fulano, da Silva"
-    expect(report_line.line).to eq 1
-    expect(report_line.success?).to eq true
-    expect(report_line.imported_file).to eq imported_file
+    expect(user.email_address).to eq("usuario1@example.com")
+    expect(user.name).to eq("Fulano")
+    expect(user.last_name).to eq("da Silva")
+    expect(report_line.command).to eq("U,usuario1@example.com, password456, password456, Fulano, da Silva")
+    expect(report_line.line).to eq(1)
+    expect(report_line.success?).to eq(true)
+    expect(report_line.imported_file).to eq(imported_file)
   end
 
-  it "should create a company profile and report success, when received correct instructions" do
+  it "should create a company profile and report success when correct instructions are received" do
     admin = create(:user, role: "admin")
     user = create(:user, email_address: "test@email.com", id: 2)
     file = Rails.root.join("./spec/fixtures/files/import_data.txt")
     imported_file = admin.imported_files.build(name: "Relatório Trimestral")
     imported_file.data.attach(io: File.open(file), filename: "import_data.txt")
     imported_file.save!
-    first_batch = [ "E,Empresa A,https://www.empresa-a.com,contato@empresa-a.com,2" ]
+    first_batch = ["E,Empresa A,https://www.empresa-a.com,contato@empresa-a.com,2"]
 
     ProcessImportLineJob.perform_now(batch: first_batch, line: 1, imported_file: imported_file)
 
     company_profile = CompanyProfile.last
     report_line = ImportLineReport.last
-    expect(company_profile.name).to eq "Empresa A"
-    expect(company_profile.website_url).to eq "https://www.empresa-a.com"
-    expect(company_profile.contact_email).to eq "contato@empresa-a.com"
-    expect(company_profile.user_id).to eq 2
-    expect(report_line.line).to eq 1
-    expect(report_line.success?).to eq true
-    expect(report_line.imported_file).to eq imported_file
+    expect(company_profile.name).to eq("Empresa A")
+    expect(company_profile.website_url).to eq("https://www.empresa-a.com")
+    expect(company_profile.contact_email).to eq("contato@empresa-a.com")
+    expect(company_profile.user_id).to eq(2)
+    expect(report_line.line).to eq(1)
+    expect(report_line.success?).to eq(true)
+    expect(report_line.imported_file).to eq(imported_file)
   end
 
-  it "should create a job posting and report success, when received correct instructions" do
+  it "should create a job posting and report success when correct instructions are received" do
     admin = create(:user, role: "admin")
     user = create(:user, email_address: "test@email.com")
     job_type = create(:job_type, id: 1, name: "Freelance")
@@ -64,32 +68,32 @@ describe ProcessImportLineJob, type: :job do
     imported_file = admin.imported_files.build(name: "Relatório Trimestral")
     imported_file.data.attach(io: File.open(file), filename: "import_data.txt")
     imported_file.save!
-    first_batch = [ "V,Desenvolvedor Ruby on Rails,5000,brl,monthly,remote,1,São Paulo,2,1, Estamos contratando Dev. Rails Júnior" ]
+    first_batch = ["V,Desenvolvedor Ruby on Rails,5000,brl,monthly,remote,1,São Paulo,2,1, Estamos contratando Dev. Rails Júnior"]
 
     ProcessImportLineJob.perform_now(batch: first_batch, line: 1, imported_file: imported_file)
 
     job_posting = JobPosting.last
     report_line = ImportLineReport.last
-    expect(job_posting.title).to eq "Desenvolvedor Ruby on Rails"
-    expect(job_posting.salary).to eq 5000
-    expect(job_posting.salary_currency).to eq "brl"
-    expect(job_posting.salary_period).to eq "monthly"
-    expect(job_posting.work_arrangement).to eq "remote"
-    expect(job_posting.job_type_id).to eq 1
-    expect(job_posting.job_type.name).to eq "Freelance"
-    expect(job_posting.job_location).to eq "São Paulo"
-    expect(job_posting.experience_level_id).to eq 2
-    expect(job_posting.experience_level.name).to eq "Júnior"
-    expect(job_posting.company_profile_id).to eq 1
-    expect(job_posting.company_profile.name).to eq "Ruby LTDA"
-    expect(job_posting.description.to_plain_text).to eq "Estamos contratando Dev. Rails Júnior"
-    expect(report_line.line).to eq 1
-    expect(report_line.success?).to eq true
-    expect(report_line.imported_file).to eq imported_file
+    expect(job_posting.title).to eq("Desenvolvedor Ruby on Rails")
+    expect(job_posting.salary).to eq(5000)
+    expect(job_posting.salary_currency).to eq("brl")
+    expect(job_posting.salary_period).to eq("monthly")
+    expect(job_posting.work_arrangement).to eq("remote")
+    expect(job_posting.job_type_id).to eq(1)
+    expect(job_posting.job_type.name).to eq("Freelance")
+    expect(job_posting.job_location).to eq("São Paulo")
+    expect(job_posting.experience_level_id).to eq(2)
+    expect(job_posting.experience_level.name).to eq("Júnior")
+    expect(job_posting.company_profile_id).to eq(1)
+    expect(job_posting.company_profile.name).to eq("Ruby LTDA")
+    expect(job_posting.description.to_plain_text).to eq("Estamos contratando Dev. Rails Júnior")
+    expect(report_line.line).to eq(1)
+    expect(report_line.success?).to eq(true)
+    expect(report_line.imported_file).to eq(imported_file)
   end
 
   it "should return failed in report" do
-        admin = create(:user, role: "admin")
+    admin = create(:user, role: "admin")
     user = create(:user, email_address: "test@email.com")
     job_type = create(:job_type, id: 1, name: "Freelance")
     experience_level = create(:experience_level, id: 2, name: "Júnior")
@@ -98,7 +102,7 @@ describe ProcessImportLineJob, type: :job do
     imported_file = admin.imported_files.build(name: "Relatório Trimestral")
     imported_file.data.attach(io: File.open(file), filename: "import_data.txt")
     imported_file.save!
-    first_batch = [ 
+    first_batch = [
       "H,usuario2@example.com",
       "U,usuario1.com",
       "E,,https://www.empresa-a.com,contato@empresa-a.com,",
@@ -110,7 +114,7 @@ describe ProcessImportLineJob, type: :job do
     reports = ImportLineReport.all
     expect(reports.count).to eq 4
     expect(reports[0].line).to eq 1
-    expect(reports[0].message).to eq "Tipo inválido"
+    expect(reports[0].message).to eq "Linha não processada: Tipo inválido"
     expect(reports[0].failed?).to eq true
     expect(reports[0].command).to eq "H,usuario2@example.com"
     expect(reports[1].line).to eq 2

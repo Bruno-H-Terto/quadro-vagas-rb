@@ -1,78 +1,56 @@
 class ProcessImportLineJob < ApplicationJob
-  queue_as :default
-
-  def perform(batch:, line:, imported_file:)
+  queue_as :large_import
+  
+  def perform(batch:, imported_file:, line:)
     reports = []
+    @success_user = 0
+    @success_company_profile = 0
+    @success_job_posting = 0
+
     batch.each do |command|
       type, instruction = ParseImportCommandService.call(instruction_line: command)
-      new_record = run_command(type: type, instruction: instruction)
-      reports << report_generate(new_record: new_record,command: command, line: line, imported_file: imported_file)
+      new_record = new_record(type: type, instruction: instruction)
+      reports << report_generate(new_record: new_record, type: type, command: command, line: line, imported_file: imported_file)
       line += 1
     end
+
+    UpdateImportedFileService.call(imported_file: imported_file,
+                                   complete_lines: batch.size,
+                                   success_user: @success_user,
+                                   success_company_profile: @success_company_profile,
+                                   success_job_posting: @success_job_posting)
+
     ImportLineReport.insert_all!(reports, returning: false)
+    broadcast_update(imported_file)
   end
 
   private
 
-  def run_command(type:, instruction:)
-    generators = {
-      u: ->{ new_user(instruction) },
-      e: ->{ new_company(instruction) },
-      v: ->{ new_job(instruction) }
-    }
+  def new_record(type:, instruction:)
+    case type.downcase
+    when 'u', 'e', 'v'
+      record = NewRecordService.call(type: type, instruction: instruction)
+    else
+      error = 'Tipo inválido'
+    end
 
-    
     begin
-      record = generators[type.downcase.to_sym]&.call
-    rescue
-      record = nil
+      status = record.save if record
+    rescue => exception
+      status = false
+      error = exception
     end
       
-    { record: record, status: record&.save }
+    { record: record, status: status, error: error || nil }
   end
 
-  def new_user(instructions)
-    email_address, password, password_confirmation, name, last_name = instructions
-    user = User.new(email_address: email_address,
-             password: password,
-             password_confirmation: password_confirmation,
-             name: name,
-             last_name: last_name
-             )
-  end
-
-  def new_company(instructions)
-    name, website_url, contact_email, user_id = instructions
-    company_profile = CompanyProfile.new(name: name,
-                                         website_url: website_url,
-                                         contact_email: contact_email,
-                                         user_id: user_id
-                                         )
-    company_profile.logo.attach(io: File.open(Rails.root.join('spec/support/files/logo.jpg')), filename: 'logo.jpg')
-    company_profile
-  end
-
-  def new_job(instructions)
-    title, salary, salary_currency, salary_period, work_arrangement, job_type_id,
-    job_location, experience_level_id, company_profile_id, description = instructions
-    JobPosting.new(title: title,
-                   salary: salary,
-                   salary_currency: salary_currency,
-                   salary_period: salary_period,
-                   work_arrangement: work_arrangement,
-                   experience_level_id: experience_level_id,
-                   job_location: job_location,
-                   job_type_id: job_type_id,
-                   company_profile_id: company_profile_id,
-                   description: description
-                   )
-  end
-
-  def report_generate(new_record:, command:, line:, imported_file:)
+  def report_generate(new_record:, type:, command:, line:, imported_file:)
     if new_record[:status]
       message = 'Sucesso'
+      incremental_success_type(type: type)
     else
-      message = new_record[:record].nil? ? "Tipo inválido" : new_record[:record].errors.full_messages.to_sentence
+      message = new_record[:record].nil? ? "Linha não processada:" : new_record[:record].errors.full_messages.to_sentence
+      message << " #{ new_record[:error] }" if new_record[:error]
     end
 
     {
@@ -82,5 +60,23 @@ class ProcessImportLineJob < ApplicationJob
       status: new_record[:status] ? :success : :failed,
       message: message
     }
+  end
+
+  def incremental_success_type(type:)
+    types = {
+              u: ->{ @success_user += 1 },
+              e: ->{ @success_company_profile += 1 },
+              v: ->{ @success_job_posting += 1}
+            }
+
+    types[type.downcase.to_sym].call
+  end
+
+  def broadcast_update(imported_file)
+    imported_file.reload
+    Turbo::StreamsChannel.broadcast_update_to(
+      "imported_file_#{imported_file.id}", target: "imported_file_#{imported_file.id}",
+      partial: "imported_files/progress", locals: { imported_file: imported_file }
+    )
   end
 end
