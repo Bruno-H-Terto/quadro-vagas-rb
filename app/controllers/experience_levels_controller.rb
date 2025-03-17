@@ -50,10 +50,4 @@ class ExperienceLevelsController < ApplicationController
       :status
     )
   end
-
-  def check_user_is_admin
-    unless Current.user.admin?
-      redirect_to root_path
-    end
-  end
 end

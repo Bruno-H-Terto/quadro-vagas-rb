@@ -1,10 +1,10 @@
 <div>
-  <h1>Resultado</h1>
+  <h1><%= t('.dashboard') %></h1>
+  <h3><%= @imported_file.name %></h3>
 </div>
 
 <%= turbo_stream_from dom_id(@imported_file) %>
 
-
-<div>
+<div id=<%= dom_id(@imported_file) %>>
   <%= render 'imported_files/progress', imported_file: @imported_file %>
 </div>

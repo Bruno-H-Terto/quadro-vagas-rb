@@ -1,0 +1,5 @@
+pt-BR:
+  imported_files:
+    create:
+      notice: Arquivo importado com sucesso!
+      alert: Não foi possível concluir esta operação

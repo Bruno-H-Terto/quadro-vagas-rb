@@ -1,7 +1,75 @@
-<div>
-  <% imported_file.import_line_reports.each do |report_line| %>
-    <div id="import_line_reports">
-      <%= report_line.line %> - <%= report_line.status %> <%= report_line.command %> <%= report_line.message.presence || '...' %>
+<div id="dashboard" data-controller="loading" data-loading-total=<%= imported_file.total_lines %>>
+  <!-- Elemento de Carregamento -->
+  <div class="loading" data-loading-target="loading">
+     <div class="spinner">Carregando...</div>
+  </div>
+
+  <div data-loading-target="content">
+    <div>
+      <div>
+        Instruções realizadas <%= imported_file.complete_lines %> de <%= imported_file.total_lines %>
+      </div>
+      <div>
+        Sucesso: <%= imported_file.import_line_reports.success.count %>
+      </div>
+
+      <div>
+        Falha: <%= imported_file.import_line_reports.failed.count %>
+      </div>
     </div>
-  <% end %>
+
+    <div data-controller="chart" data-chart-success="<%= imported_file.import_line_reports.success.count %>"
+        data-chart-failed="<%= imported_file.import_line_reports.failed.count %>">
+      <div class="chart" data-chart-target="chart">
+        <div class="bar success" title=<%= imported_file.import_line_reports.success.count %>></div>
+        <div class="bar failed" title=<%= imported_file.import_line_reports.failed.count %>></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="reports" data-controller="report" data-report-status=<%= imported_file.complete? %>>
+    <div data-report-target = "btn">
+      <div>Relatório</div>
+      <div>
+        <span>Usuário gerados <%= imported_file.success_user %></span>
+        <span>Empresas geradas <%= imported_file.success_company_profile %></span>
+        <span>Vagas geradas <%= imported_file.success_job_posting %></span>
+      </div>
+      <%= link_to "Imprimir relatório", download_report_txt_path(imported_file_id: imported_file.id) %>
+    </div>
+    
+    <div>
+      <% imported_file.import_line_reports.failed.sort_by(&:line).each do |line| %>
+        <div>
+          <%= line.line %> <%= line.message %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
+
+
+<style>
+.chart {
+  margin-top: 3rem;
+  display: flex;
+  height: 300px; /* Tamanho da altura do gráfico */
+  width: 100%;
+  gap: 1rem; /* Espaçar as colunas */
+  align-items: baseline;
+}
+
+.bar {
+  width: 40px; /* Largura de cada coluna */
+  display: block;
+}
+
+.success {
+  background-color: rgba(54, 162, 235, 0.7); /* Cor para sucesso */
+}
+
+.failed {
+  background-color: rgba(255, 99, 132, 0.7); /* Cor para falha */
+}
+
+</style>

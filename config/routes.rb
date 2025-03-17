@@ -26,4 +26,5 @@ Rails.application.routes.draw do
   resources :job_postings, only: %i[show new create]
   get "search", to: "home#search", as: :search_jobs, param: :query
   resources :imported_files, only: %i[ new create show ]
+  get "download", to: "imported_files#download", as: :download_report_txt, param: :imported_file_id
 end

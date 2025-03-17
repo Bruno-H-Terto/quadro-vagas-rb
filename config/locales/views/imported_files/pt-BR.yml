@@ -1,0 +1,6 @@
+pt-BR:
+  imported_files:
+    new:
+      import: Importar
+    show:
+      dashboard: 'Dashboard'

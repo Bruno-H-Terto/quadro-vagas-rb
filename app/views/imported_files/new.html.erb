@@ -1,12 +1,17 @@
 <%= form_with(model: @imported_file) do |f| %>
   <div>
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, required: true %>
+    <%= form_error_message(@imported_file, :name) %>
   </div>
 
   <div>
-    <%= f.file_field :data %>
+    <%= f.label :data %>
+    <%= f.file_field :data, required: true %>
+    <%= form_error_message(@imported_file, :data) %>
   </div>
 
-  <%= f.submit %>
+  <div id="import-form-btn">
+    <%= f.submit t('.import') %>
+  </div>
 <% end %>

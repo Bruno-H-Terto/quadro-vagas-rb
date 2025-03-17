@@ -15,10 +15,11 @@ describe "Visitor sees job posting", type: :system do
   end
 
   it "and goes back to job postings list" do
-    node_job_posting = create(:job_posting)
+    experience_level = create(:experience_level)
+    node_job_posting = create(:job_posting, experience_level: experience_level)
     second_user = create(:user, email_address: 'second@user.com')
     second_company = create(:company_profile, user: second_user, contact_email: 'second@company.com')
-    rails_job_posting = create(:job_posting, company_profile: second_company)
+    rails_job_posting = create(:job_posting, company_profile: second_company, experience_level: experience_level)
 
     visit root_path
     click_on node_job_posting.title

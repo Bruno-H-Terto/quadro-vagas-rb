@@ -41,6 +41,7 @@
         <% if authenticated? %>
           <li role="none" class="flex items-stretch">
             <% if Current.user.admin? %>
+              <%= link_to "Importar arquivo", new_imported_file_path, class:"flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600 focus:outline-none focus-visible:outline-none lg:px-8 hover:cursor-pointer", role:"menuitem", aria: { 'haspopup':"false" } %>
               <%= link_to t('shared._navbar.experience_levels'), experience_levels_path, class:"flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600 focus:outline-none focus-visible:outline-none lg:px-8 hover:cursor-pointer", role:"menuitem", aria: { 'haspopup':"false" } %>
             <% end %>
             <% if Current.user.company_profile %>
@@ -52,7 +53,6 @@
 
           <%= link_to t("shared.navbar.new_job_post"), new_job_posting_path, class: "py-4 transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600 focus:outline-none focus-visible:outline-none lg:px-8"%>
           <%= button_to t("shared.navbar.sign_out"), session_path, method: :delete, class: "cursor-pointer py-2 px-4 font-medium text-slate-700 transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600 focus:outline-none border border-slate-200 hover:border-slate-300 focus:border-slate-300 rounded-md" %>
-          <%= link_to "Importar arquivo", new_imported_file_path, class: "cursor-pointer py-2 px-4 font-medium text-slate-700 transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600 focus:outline-none border border-slate-200 hover:border-slate-300 focus:border-slate-300 rounded-md" %>
 
         <% else %>
           <%= link_to t("shared.navbar.sign_in"), new_session_path, class: "cursor-pointer py-2 px-4 font-medium text-slate-700 transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600 focus:outline-none border border-slate-200 hover:border-slate-300 focus:border-slate-300 rounded-md" %>
