@@ -1,6 +1,6 @@
 class ProcessImportLineJob < ApplicationJob
   queue_as :large_import
-  
+
   def perform(batch:, imported_file:, line:)
     reports = []
     @success_user = 0
@@ -28,10 +28,10 @@ class ProcessImportLineJob < ApplicationJob
 
   def new_record(type:, instruction:)
     case type.downcase
-    when 'u', 'e', 'v'
+    when "u", "e", "v"
       record = NewRecordService.call(type: type, instruction: instruction)
     else
-      error = 'Tipo inválido'
+      error = "Tipo inválido"
     end
 
     begin
@@ -40,13 +40,13 @@ class ProcessImportLineJob < ApplicationJob
       status = false
       error = exception
     end
-      
+
     { record: record, status: status, error: error || nil }
   end
 
   def report_generate(new_record:, type:, command:, line:, imported_file:)
     if new_record[:status]
-      message = 'Sucesso'
+      message = "Sucesso"
       incremental_success_type(type: type)
     else
       message = new_record[:record].nil? ? "Linha não processada:" : new_record[:record].errors.full_messages.to_sentence
@@ -64,9 +64,9 @@ class ProcessImportLineJob < ApplicationJob
 
   def incremental_success_type(type:)
     types = {
-              u: ->{ @success_user += 1 },
-              e: ->{ @success_company_profile += 1 },
-              v: ->{ @success_job_posting += 1}
+              u: -> { @success_user += 1 },
+              e: -> { @success_company_profile += 1 },
+              v: -> { @success_job_posting += 1 }
             }
 
     types[type.downcase.to_sym].call

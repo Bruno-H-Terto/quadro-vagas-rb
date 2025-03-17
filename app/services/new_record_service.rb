@@ -4,15 +4,15 @@ class NewRecordService < ApplicationService
   end
 
   private
-  
+
   def run
     instruction = kwargs[:instruction]
     type = kwargs[:type]
 
     generators = {
-      u: ->{ new_user(instruction) },
-      e: ->{ new_company(instruction) },
-      v: ->{ new_job(instruction) }
+      u: -> { new_user(instruction) },
+      e: -> { new_company(instruction) },
+      v: -> { new_job(instruction) }
     }
 
     generators[type.downcase.to_sym]&.call
@@ -37,7 +37,7 @@ class NewRecordService < ApplicationService
                                          contact_email: contact_email,
                                          user_id: user_id
                                          )
-    company_profile.logo.attach(io: File.open(Rails.root.join('spec/support/files/logo.jpg')), filename: 'logo.jpg')
+    company_profile.logo.attach(io: File.open(Rails.root.join("spec/support/files/logo.jpg")), filename: "logo.jpg")
 
     company_profile
   end

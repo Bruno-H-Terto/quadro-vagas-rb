@@ -12,7 +12,7 @@ gem "pg_search"
 gem "propshaft"
 gem "puma", ">= 5.0"
 gem "rails", "~> 8.0.1"
-gem 'redis'
+gem "redis"
 gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"

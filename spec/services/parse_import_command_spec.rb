@@ -6,9 +6,9 @@ RSpec.describe ParseImportCommandService do
     result = described_class.call(instruction_line: instruction_line)
 
     expected_type = "U"
-    expected_instruction = ["usuario@example.com", "password123", "password123", "Fulano", "Silva"]
+    expected_instruction = [ "usuario@example.com", "password123", "password123", "Fulano", "Silva" ]
 
-    expect(result).to eq([expected_type, expected_instruction])
+    expect(result).to eq([ expected_type, expected_instruction ])
   end
 
   it 'parses company command correctly' do
@@ -16,9 +16,9 @@ RSpec.describe ParseImportCommandService do
     result = described_class.call(instruction_line: instruction_line)
 
     expected_type = "E"
-    expected_instruction = ["Empresa X", "https://empresa.com", "contato@empresa.com", "1"]
+    expected_instruction = [ "Empresa X", "https://empresa.com", "contato@empresa.com", "1" ]
 
-    expect(result).to eq([expected_type, expected_instruction])
+    expect(result).to eq([ expected_type, expected_instruction ])
   end
 
   it 'parses job command correctly' do
@@ -30,7 +30,7 @@ RSpec.describe ParseImportCommandService do
       "Desenvolvedor Ruby", "5000", "brl", "monthly", "remote", "2", "São Paulo", "3", "Empresa incrível"
     ]
 
-    expect(result).to eq([expected_type, expected_instruction])
+    expect(result).to eq([ expected_type, expected_instruction ])
   end
 
   it 'removes extra spaces in each field' do
@@ -38,8 +38,8 @@ RSpec.describe ParseImportCommandService do
     result = described_class.call(instruction_line: instruction_line)
 
     expected_type = "U"
-    expected_instruction = ["usuario@example.com", "password123", "password123", "Fulano", "Silva"]
+    expected_instruction = [ "usuario@example.com", "password123", "password123", "Fulano", "Silva" ]
 
-    expect(result).to eq([expected_type, expected_instruction])
+    expect(result).to eq([ expected_type, expected_instruction ])
   end
 end

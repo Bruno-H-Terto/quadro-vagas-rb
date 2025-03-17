@@ -14,7 +14,7 @@ RSpec.describe ImportedFile, type: :model do
       file = Rails.root.join('./spec/fixtures/files/import_data.txt')
       imported_file = admin.imported_files.build(name: 'Base')
       imported_file.data.attach(io: File.open(file), filename: 'import_data.txt')
-      
+
       expect(imported_file).to be_valid
     end
 
@@ -23,7 +23,7 @@ RSpec.describe ImportedFile, type: :model do
       file = Rails.root.join('./spec/fixtures/files/import_data.txt')
       imported_file = admin.imported_files.build(name: 'Base')
       imported_file.data.attach(io: File.open(file), filename: 'import_data.csv')
-      
+
       expect(imported_file).to be_valid
     end
 
@@ -32,7 +32,7 @@ RSpec.describe ImportedFile, type: :model do
       file = Rails.root.join('./spec/fixtures/files/import_data.txt')
       imported_file = admin.imported_files.build(name: 'Base')
       imported_file.data.attach(io: File.open(file), filename: 'import_data.pdf')
-      
+
       expect(imported_file).not_to be_valid
     end
   end

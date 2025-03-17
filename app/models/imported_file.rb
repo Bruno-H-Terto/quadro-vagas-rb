@@ -5,7 +5,7 @@ class ImportedFile < ApplicationRecord
 
   validates :name, :data, presence: true
 
-  after_create_commit -> { 
+  after_create_commit -> {
     broadcast_append_to "imported_file_#{self.id}", partial: "imported_files/progress"
   }
 
@@ -17,14 +17,14 @@ class ImportedFile < ApplicationRecord
 
   def reports_failed
     reports_list = self.import_line_reports.failed
-    reports_content = ''
+    reports_content = ""
     reports_list.sort_by(&:line).each do |report_line|
       reports_content << "#{report_line.line} - #{report_line.command.chomp} - #{report_line.message}\n"
     end
-    
+
     reports_content.strip
   end
-  
+
   private
 
   def file_allowed_type

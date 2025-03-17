@@ -3,7 +3,7 @@ require 'rails_helper'
 describe ProcessImportedFileJob, type: :job do
   it 'should be queued when user sends file' do
     file_id = 100
-    
+
     ProcessImportedFileJob.perform_later(file_id: file_id)
 
     expect(enqueued_jobs.size).to eq(1)

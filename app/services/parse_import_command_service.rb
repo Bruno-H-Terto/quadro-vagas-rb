@@ -4,9 +4,9 @@ class ParseImportCommandService < ApplicationService
   end
 
   private
-  
+
   def run
-    instruction_line = kwargs[:instruction_line].split(',')
+    instruction_line = kwargs[:instruction_line].split(",")
     type = instruction_line.shift
     instruction_line = instruction_line.map(&:strip)
     [ type, instruction_line ]

@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   def check_user_is_admin
     unless Current.user.admin?
-      redirect_to root_path, alert: 'Requisição inválida, consulte o administrador do serviço.'
+      redirect_to root_path, alert: "Requisição inválida, consulte o administrador do serviço."
     end
   end
 end

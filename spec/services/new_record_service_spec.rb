@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe NewRecordService, type: :service do
   describe '#call' do
     it 'creates a new user object' do
-      user_data = ["usuario@example.com", "senha123", "senha123", "Fulano", "da Silva"]
+      user_data = [ "usuario@example.com", "senha123", "senha123", "Fulano", "da Silva" ]
 
       result = NewRecordService.call(instruction: user_data, type: 'u')
 
@@ -17,7 +17,7 @@ RSpec.describe NewRecordService, type: :service do
 
     it 'creates a new company profile object' do
       user = create(:user)
-      company_data = ["Empresa X", "https://www.empresa-x.com", "contato@empresa-x.com", user.id]
+      company_data = [ "Empresa X", "https://www.empresa-x.com", "contato@empresa-x.com", user.id ]
 
       result = NewRecordService.call(instruction: company_data, type: 'e')
 
@@ -52,12 +52,11 @@ RSpec.describe NewRecordService, type: :service do
     end
 
     it 'returns nil for an unknown type' do
-      invalid_data = ["Dado inválido"]
-      
+      invalid_data = [ "Dado inválido" ]
+
       result = NewRecordService.call(instruction: invalid_data, type: 'x')
 
       expect(result).to be_nil
     end
   end
 end
-

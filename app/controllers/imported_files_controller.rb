@@ -8,10 +8,10 @@ class ImportedFilesController < ApplicationController
     @imported_file = Current.user.imported_files.build(imported_file_params)
     if @imported_file.save
       ProcessImportedFileJob.perform_later(file_id: @imported_file.id)
-      return redirect_to @imported_file, notice: t('.notice')
+      return redirect_to @imported_file, notice: t(".notice")
     end
 
-    flash.now[:alert] = t('.alert')
+    flash.now[:alert] = t(".alert")
     render :new, status: :unprocessable_entity
   end
 

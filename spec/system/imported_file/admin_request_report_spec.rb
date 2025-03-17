@@ -6,7 +6,7 @@ describe 'Admin request report', type: :system do
     [ "Full Time", "Part Time", "Freelance" ].each_with_index do |job_type_name, index|
       JobType.create!(name: job_type_name)
     end
-    
+
     [ "Intern", "Junior", "Mid level", "Senior" ].each_with_index do |experience_level, index|
       ExperienceLevel.create!(name: experience_level)
     end
@@ -20,7 +20,7 @@ describe 'Admin request report', type: :system do
       "E,,https://www.empresa-a.com,contato@empresa-a.com,",
       "V,Desenvolvedor Ruby on Rails,,brl,monthly,remote,,São Paulo,,,Estamos contratando Dev. Rails Júnior"
     ]
-    
+
     login_as admin
     visit root_path
     click_on 'Importar arquivo'

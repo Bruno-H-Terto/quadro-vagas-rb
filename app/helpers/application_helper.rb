@@ -11,7 +11,7 @@ module ApplicationHelper
 
   def form_error_message(object, attribute)
     if object.errors[attribute].any?
-      content_tag :small, class: 'absolute flex justify-between w-full py-1 text-xs transition text-pink-500' do
+      content_tag :small, class: "absolute flex justify-between w-full py-1 text-xs transition text-pink-500" do
         content_tag :span do
           object.errors.full_messages_for(attribute).join(", ")
         end

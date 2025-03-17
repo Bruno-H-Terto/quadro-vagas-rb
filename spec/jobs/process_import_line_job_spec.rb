@@ -7,7 +7,7 @@ describe ProcessImportLineJob, type: :job do
     imported_file = admin.imported_files.build(name: "Relatório Trimestral")
     imported_file.data.attach(io: File.open(file), filename: "import_data.txt")
     imported_file.save!
-    batch = ["U,usuario1@example.com"]
+    batch = [ "U,usuario1@example.com" ]
     line = 1
 
     ProcessImportedFileJob.perform_later(batch: batch, line: line, imported_file: imported_file)
@@ -21,7 +21,7 @@ describe ProcessImportLineJob, type: :job do
     imported_file = admin.imported_files.build(name: "Relatório Trimestral")
     imported_file.data.attach(io: File.open(file), filename: "import_data.txt")
     imported_file.save!
-    first_batch = ["U,usuario1@example.com, password456, password456, Fulano, da Silva"]
+    first_batch = [ "U,usuario1@example.com, password456, password456, Fulano, da Silva" ]
 
     ProcessImportLineJob.perform_now(batch: first_batch, line: 1, imported_file: imported_file)
 
@@ -43,7 +43,7 @@ describe ProcessImportLineJob, type: :job do
     imported_file = admin.imported_files.build(name: "Relatório Trimestral")
     imported_file.data.attach(io: File.open(file), filename: "import_data.txt")
     imported_file.save!
-    first_batch = ["E,Empresa A,https://www.empresa-a.com,contato@empresa-a.com,2"]
+    first_batch = [ "E,Empresa A,https://www.empresa-a.com,contato@empresa-a.com,2" ]
 
     ProcessImportLineJob.perform_now(batch: first_batch, line: 1, imported_file: imported_file)
 
@@ -68,7 +68,7 @@ describe ProcessImportLineJob, type: :job do
     imported_file = admin.imported_files.build(name: "Relatório Trimestral")
     imported_file.data.attach(io: File.open(file), filename: "import_data.txt")
     imported_file.save!
-    first_batch = ["V,Desenvolvedor Ruby on Rails,5000,brl,monthly,remote,1,São Paulo,2,1, Estamos contratando Dev. Rails Júnior"]
+    first_batch = [ "V,Desenvolvedor Ruby on Rails,5000,brl,monthly,remote,1,São Paulo,2,1, Estamos contratando Dev. Rails Júnior" ]
 
     ProcessImportLineJob.perform_now(batch: first_batch, line: 1, imported_file: imported_file)
 

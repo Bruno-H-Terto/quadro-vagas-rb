@@ -18,7 +18,7 @@ describe 'Admin imports a file', type: :system do
 
   it 'with success' do
     admin = create(:user, role: 'admin')
-    
+
     login_as admin
     visit root_path
     click_on 'Importar arquivo'
@@ -39,7 +39,7 @@ describe 'Admin imports a file', type: :system do
     [ "Full Time", "Part Time", "Freelance" ].each_with_index do |job_type_name, index|
       JobType.create!(name: job_type_name)
     end
-    
+
     [ "Intern", "Junior", "Mid level", "Senior" ].each_with_index do |experience_level, index|
       ExperienceLevel.create!(name: experience_level)
     end
@@ -53,7 +53,7 @@ describe 'Admin imports a file', type: :system do
       "E,Empresa A,https://www.empresa-a.com,contato@empresa-a.com,#{user.id}",
       "V,Desenvolvedor Ruby on Rails,5000,brl,monthly,remote,#{JobType.first.id},São Paulo,#{ExperienceLevel.first.id},#{company.id},Estamos contratando Dev. Rails Júnior"
     ]
-    
+
     login_as admin
     visit root_path
     click_on 'Importar arquivo'
@@ -116,7 +116,7 @@ describe 'Admin imports a file', type: :system do
 
   it 'fails if mandatory fields are missing' do
     admin = create(:user, role: 'admin')
-    
+
     login_as admin
     visit root_path
     click_on 'Importar arquivo'
@@ -131,7 +131,7 @@ describe 'Admin imports a file', type: :system do
 
   it 'should accept only .txt or .csv file formats' do
     admin = create(:user, role: 'admin')
-    
+
     login_as admin
     visit root_path
     click_on 'Importar arquivo'

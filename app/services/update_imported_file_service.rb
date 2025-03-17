@@ -4,7 +4,7 @@ class UpdateImportedFileService < ApplicationService
   end
 
   private
-  
+
   def run
     imported_file = kwargs[:imported_file]
     imported_file.increment!(:complete_lines, kwargs[:complete_lines])
