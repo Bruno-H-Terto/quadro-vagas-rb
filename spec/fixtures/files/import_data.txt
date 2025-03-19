@@ -1,105 +1,105 @@
-U,usuario1@example.com,password456,password456,Fulano,da Silva
+U,usuario1@example.com,Fulano,da Silva
 E,Empresa A,https://www.empresa-a.com,contato@empresa-a.com,2
 V,Desenvolvedor Ruby on Rails,5000,brl,monthly,remote,1,São Paulo,2,1,Estamos contratando Dev. Rails Júnior
 U,usuario2@example.com,password789,password789,Ana,Bezerra
 E,Empresa B,https://www.empresa-b.com,contato@empresa-b.com,3
 V,Desenvolvedor Front-end,6000,brl,monthly,hybrid,1,Belo Horizonte,2,2,Contratando Dev. Front-end para projetos incríveis!
-U,usuario3@example.com,password123,password123,João,Silva
+U,usuario3@example.com,João,Silva
 E,Empresa C,https://www.empresa-c.com,contato@empresa-c.com,4
 V,Desenvolvedor Backend,7000,brl,monthly,remote,1,Recife,3,3,Procuramos desenvolvedor para nossa equipe de back-end
-U,usuario4@example.com,password456,password456,Larissa,Souza
+U,usuario4@example.com,Larissa,Souza
 E,Empresa D,https://www.empresa-d.com,contato@empresa-d.com,5
 V,Desenvolvedor Full Stack,8000,brl,monthly,hybrid,2,Fortaleza,4,4,Vaga para desenvolvedor full stack em equipe ágil
 U,usuario5@example.com,password789,password789,Ricardo,Alves
 E,Empresa E,https://www.empresa-e.com,contato@empresa-e.com,6
 V,Desenvolvedor Java,7500,brl,monthly,remote,1,São Paulo,2,5,Buscamos desenvolvedor Java para integração com APIs
-U,usuario6@example.com,password123,password123,Maria,Fernandes
+U,usuario6@example.com,Maria,Fernandes
 E,Empresa F,https://www.empresa-f.com,contato@empresa-f.com,7
 V,Desenvolvedor Python,6500,brl,monthly,remote,1,Rio de Janeiro,2,6,Equipe dinâmica em busca de Dev. Python!
-U,usuario7@example.com,password456,password456,Lucas,Pereira
+U,usuario7@example.com,Lucas,Pereira
 E,Empresa G,https://www.empresa-g.com,contato@empresa-g.com,8
 V,Desenvolvedor Mobile,7000,brl,monthly,hybrid,2,Salvador,3,7,Procuramos Dev. Mobile para desenvolver aplicativos nativos
 U,usuario8@example.com,password789,password789,Paula,Ribeiro
 E,Empresa H,https://www.empresa-h.com,contato@empresa-h.com,9
 V,Desenvolvedor React,7200,brl,monthly,remote,1,Belo Horizonte,3,8,Contratação de Dev. React para projetos desafiadores
-U,usuario9@example.com,password123,password123,Fábio,Oliveira
+U,usuario9@example.com,Fábio,Oliveira
 E,Empresa I,https://www.empresa-i.com,contato@empresa-i.com,10
 V,Desenvolvedor C#,7500,brl,monthly,hybrid,2,Curitiba,4,9,Procuramos C# Developer para equipe de desenvolvimento
-U,usuario10@example.com,password456,password456,Beatriz,Lima
+U,usuario10@example.com,Beatriz,Lima
 E,Empresa J,https://www.empresa-j.com,contato@empresa-j.com,11
 V,Desenvolvedor Node.js,7200,brl,monthly,remote,1,São Paulo,2,10,Contratando Dev. Node.js para novos projetos de API
 U,usuario11@example.com,password789,password789,Fernanda,Cardoso
 E,Empresa K,https://www.empresa-k.com,contato@empresa-k.com,12
 V,Desenvolvedor Laravel,6800,brl,monthly,hybrid,2,Natal,3,11,Equipe ágil busca Dev. Laravel para sistema web
-U,usuario12@example.com,password123,password123,Carlos,Martins
+U,usuario12@example.com,Carlos,Martins
 E,Empresa L,https://www.empresa-l.com,contato@empresa-l.com,13
 V,Desenvolvedor WordPress,5500,brl,monthly,remote,1,Florianópolis,2,12,Contratação de Dev. WordPress para novas soluções
-U,usuario13@example.com,password456,password456,Simone,Santos
+U,usuario13@example.com,Simone,Santos
 E,Empresa M,https://www.empresa-m.com,contato@empresa-m.com,14
 V,Desenvolvedor JavaScript,6000,brl,monthly,remote,1,Porto Alegre,3,13,Equipe em crescimento busca Dev. JavaScript
 U,usuario14@example.com,password789,password789,Eduardo,Silva
 E,Empresa N,https://www.empresa-n.com,contato@empresa-n.com,15
 V,Desenvolvedor Ruby on Rails,8000,brl,monthly,hybrid,2,Belo Horizonte,4,14,Buscamos Dev. Ruby on Rails para novos projetos
-U,usuario15@example.com,password123,password123,Aline,Almeida
+U,usuario15@example.com,Aline,Almeida
 E,Empresa O,https://www.empresa-o.com,contato@empresa-o.com,16
 V,Desenvolvedor PHP,7000,brl,monthly,remote,1,São Paulo,3,15,Contratando Dev. PHP com experiência em frameworks
-U,usuario16@example.com,password456,password456,Thiago,Monteiro
+U,usuario16@example.com,Thiago,Monteiro
 E,Empresa P,https://www.empresa-p.com,contato@empresa-p.com,17
 V,Desenvolvedor .NET,7500,brl,monthly,hybrid,2,Recife,2,16,Desenvolvedor .NET para desenvolvimento de sistemas corporativos
 U,usuario17@example.com,password789,password789,Lucas,Mota
 E,Empresa Q,https://www.empresa-q.com,contato@empresa-q.com,18
 V,Desenvolvedor Flutter,8000,brl,monthly,remote,1,Rio de Janeiro,2,17,Procuramos Dev. Flutter para desenvolvimento de aplicativos móveis
-U,usuario18@example.com,password123,password123,Mariana,Oliveira
+U,usuario18@example.com,Mariana,Oliveira
 E,Empresa R,https://www.empresa-r.com,contato@empresa-r.com,19
 V,Desenvolvedor Go,8500,brl,monthly,hybrid,2,São Paulo,3,18,Contratando Dev. Go para soluções de alta performance
-U,usuario19@example.com,password456,password456,Bruna,Fernandes
+U,usuario19@example.com,Bruna,Fernandes
 E,Empresa S,https://www.empresa-s.com,contato@empresa-s.com,20
 V,Desenvolvedor Swift,7000,brl,monthly,remote,1,Florianópolis,2,19,Desenvolvedor Swift para criar apps iOS de alto impacto
 U,usuario20@example.com,password789,password789,Matheus,Silveira
 E,Empresa T,https://www.empresa-t.com,contato@empresa-t.com,21
 V,Desenvolvedor TypeScript,7800,brl,monthly,remote,1,São Paulo,3,20,Equipe de TI busca Dev. TypeScript para projetos web
-U,usuario21@example.com,password123,password123,Joana,Rocha
+U,usuario21@example.com,Joana,Rocha
 E,Empresa U,https://www.empresa-u.com,contato@empresa-u.com,22
 V,Desenvolvedor SQL,6000,brl,monthly,hybrid,2,Curitiba,2,21,Contratando Dev. SQL para otimização de banco de dados
-U,usuario22@example.com,password456,password456,José,Pereira
+U,usuario22@example.com,José,Pereira
 E,Empresa V,https://www.empresa-v.com,contato@empresa-v.com,23
 V,Desenvolvedor Ruby on Rails,8500,brl,monthly,remote,1,Rio de Janeiro,3,22,Desenvolvedor Ruby on Rails para atuar em projetos internacionais
 U,usuario23@example.com,password789,password789,Carla,Lima
 E,Empresa W,https://www.empresa-w.com,contato@empresa-w.com,24
 V,Desenvolvedor Angular,7500,brl,monthly,hybrid,2,Belo Horizonte,4,23,Buscamos Dev. Angular para desenvolvimento de front-end
-U,usuario24@example.com,password123,password123,Luiz,Machado
+U,usuario24@example.com,Luiz,Machado
 E,Empresa X,https://www.empresa-x.com,contato@empresa-x.com,25
 V,Desenvolvedor Java,6500,brl,monthly,remote,1,Fortaleza,3,24,Dev. Java para integração de sistemas legados
-U,usuario25@example.com,password456,password456,Rodrigo,Souza
+U,usuario25@example.com,Rodrigo,Souza
 E,Empresa Y,https://www.empresa-y.com,contato@empresa-y.com,26
 V,Desenvolvedor Back-end,7000,brl,monthly,hybrid,2,Natal,4,25,Buscamos Dev. Back-end para otimização de sistemas
 U,usuario26@example.com,password789,password789,Mário,Martins
 E,Empresa Z,https://www.empresa-z.com,contato@empresa-z.com,27
 V,Desenvolvedor React,7200,brl,monthly,remote,1,Salvador,3,26,Procurando Dev. React para trabalhar com APIs
-U,usuario27@example.com,password123,password123,Roberta,Silveira
+U,usuario27@example.com,Roberta,Silveira
 E,Empresa AA,https://www.empresa-aa.com,contato@empresa-aa.com,28
 V,Desenvolvedor Kotlin,7800,brl,monthly,remote,1,Belo Horizonte,2,27,Dev. Kotlin para desenvolvimento de aplicativos Android
-U,usuario28@example.com,password456,password456,Paulo,Alves
+U,usuario28@example.com,Paulo,Alves
 E,Empresa BB,https://www.empresa-bb.com,contato@empresa-bb.com,29
 V,Desenvolvedor Ruby on Rails,8000,brl,monthly,hybrid,2,Rio de Janeiro,3,28,Procuramos Dev. Ruby on Rails com experiência em APIs RESTful
-U,usuario27@example.com,password123,password123,Roberta,Silveira
+U,usuario27@example.com,Roberta,Silveira
 E,Empresa AA,https://www.empresa-aa.com,contato@empresa-aa.com,28
 V,Desenvolvedor Kotlin,7800,brl,monthly,remote,1,Belo Horizonte,2,27,Dev. Kotlin para desenvolvimento de aplicativos Android
-U,usuario28@example.com,password456,password456,Paulo,Alves
+U,usuario28@example.com,Paulo,Alves
 E,Empresa BB,https://www.empresa-bb.com,contato@empresa-bb.com,29
-V,Desenvolvedor Ruby on Rails,8000,brl,monthly,hybrid,2,Rio de Janeiro,3,28,Procuramos Dev. Ruby on Rails com experiência em APIs RESTfulU,usuario27@example.com,password123,password123,Roberta,Silveira
+V,Desenvolvedor Ruby on Rails,8000,brl,monthly,hybrid,2,Rio de Janeiro,3,28,Procuramos Dev. Ruby on Rails com experiência em APIs RESTfulU,usuario27@example.com,Roberta,Silveira
 E,Empresa AA,https://www.empresa-aa.com,contato@empresa-aa.com,28
 V,Desenvolvedor Kotlin,7800,brl,monthly,remote,1,Belo Horizonte,2,27,Dev. Kotlin para desenvolvimento de aplicativos Android
-U,usuario28@example.com,password456,password456,Paulo,Alves
+U,usuario28@example.com,Paulo,Alves
 E,Empresa BB,https://www.empresa-bb.com,contato@empresa-bb.com,29
-V,Desenvolvedor Ruby on Rails,8000,brl,monthly,hybrid,2,Rio de Janeiro,3,28,Procuramos Dev. Ruby on Rails com experiência em APIs RESTfulU,usuario27@example.com,password123,password123,Roberta,Silveira
+V,Desenvolvedor Ruby on Rails,8000,brl,monthly,hybrid,2,Rio de Janeiro,3,28,Procuramos Dev. Ruby on Rails com experiência em APIs RESTfulU,usuario27@example.com,Roberta,Silveira
 E,Empresa AA,https://www.empresa-aa.com,contato@empresa-aa.com,28
 V,Desenvolvedor Kotlin,7800,brl,monthly,remote,1,Belo Horizonte,2,27,Dev. Kotlin para desenvolvimento de aplicativos Android
-U,usuario28@example.com,password456,password456,Paulo,Alves
+U,usuario28@example.com,Paulo,Alves
 E,Empresa BB,https://www.empresa-bb.com,contato@empresa-bb.com,29
-V,Desenvolvedor Ruby on Rails,8000,brl,monthly,hybrid,2,Rio de Janeiro,3,28,Procuramos Dev. Ruby on Rails com experiência em APIs RESTfulU,usuario27@example.com,password123,password123,Roberta,Silveira
+V,Desenvolvedor Ruby on Rails,8000,brl,monthly,hybrid,2,Rio de Janeiro,3,28,Procuramos Dev. Ruby on Rails com experiência em APIs RESTfulU,usuario27@example.com,Roberta,Silveira
 E,Empresa AA,https://www.empresa-aa.com,contato@empresa-aa.com,28
 V,Desenvolvedor Kotlin,7800,brl,monthly,remote,1,Belo Horizonte,2,27,Dev. Kotlin para desenvolvimento de aplicativos Android
-U,usuario28@example.com,password456,password456,Paulo,Alves
+U,usuario28@example.com,Paulo,Alves
 E,Empresa BB,https://www.empresa-bb.com,contato@empresa-bb.com,29
 V,Desenvolvedor Ruby on Rails,8000,brl,monthly,hybrid,2,Rio de Janeiro,3,28,Procuramos Dev. Ruby on Rails com experiência em APIs RESTful

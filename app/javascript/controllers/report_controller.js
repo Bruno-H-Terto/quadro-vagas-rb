@@ -2,13 +2,13 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="report"
 export default class extends Controller {
-  static targets = ["btn"];
+  static targets = ["reportArea"];
   connect() {
     const result = this.data.get("status");
     if (result === "true") {
-      this.btnTarget.style.display = "block";
+      this.reportAreaTarget.style.display = "block";
     } else {
-      this.btnTarget.style.display = "none";
+      this.reportAreaTarget.style.display = "none";
     }
   }
 }

@@ -3,14 +3,19 @@ class CompanyProfile < ApplicationRecord
 
   has_one_attached :logo
 
-  validates :name, :website_url, :contact_email, :logo, presence: true
+  validates :name, :website_url, :contact_email, presence: true
   validates :contact_email, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i }
   validates :website_url, format: { with: /\Ahttps?:\/\/([a-z0-9\-]+\.)+[a-z]{2,6}\z/i, message: I18n.t("errors.messages.invalid_url_format") }
   validates :user, :contact_email, uniqueness: true
-  validate :logo_image_type
+  validate :logo_image_type, if: :logo_present?
   validate :contact_email_is_not_equal_to_any_registered_user_email, if: :user_and_contact_email_present?
 
   private
+
+  def logo_present?
+    logo.attached?
+  end
+
   def logo_image_type
     allowed_types = [ "image/png", "image/jpeg", "image/jpg" ]
 

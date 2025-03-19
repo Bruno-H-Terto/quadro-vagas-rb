@@ -1,17 +1,35 @@
-<%= form_with(model: @imported_file) do |f| %>
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name, required: true %>
-    <%= form_error_message(@imported_file, :name) %>
-  </div>
+<section class="flex flex-col gap-3">
+  <h1>Importação de Arquivo</h1>
 
-  <div>
-    <%= f.label :data %>
-    <%= f.file_field :data, required: true %>
-    <%= form_error_message(@imported_file, :data) %>
-  </div>
+  <%= form_with(model: @imported_file, class: 'border border-2 border-green-300 p-4 roudend-lg') do |f| %>
+    <div class="flex gap-2 items-center">
+      <%= f.label :name, class:"hidden"%>
+      <%= f.text_field :name, required: true, placeholder: 'Nome do documento', class: "block shadow-sm rounded-md border border-gray-400 focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
+      <%= form_error_message(@imported_file, :name) %>
+    </div>
 
-  <div id="import-form-btn">
-    <%= f.submit t('.import') %>
-  </div>
-<% end %>
+    <div>
+      <div class="relative my-6">
+        <%= f.label :data, class: "hidden", id:"id-dropzone01" %>
+        <%= f.file_field :data, required: true, class:"relative flex flex-col items-center gap-4 px-3 py-6 text-sm font-medium text-center transition-colors border border-dashed rounded cursor-pointer border-slate-300" %>
+
+        <label for="id-dropzone01" >
+          <span class="inline-flex items-center self-center justify-center h-12 px-3 rounded-full bg-slate-100/70 text-slate-400">
+            <svg xmlns="http://www.w3.org/2000/svg" aria-label="File input icon" role="graphics-symbol" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
+            </svg>
+          </span>
+          <span class="text-slate-500">
+            Selecione um arquivo
+            <span class="text-emerald-500"> .txt ou .csv</span>
+          </span>
+        </label>
+      </div>
+      <%= form_error_message(@imported_file, :data) %>
+    </div>
+
+    <div id="import-form-btn">
+      <%= f.submit t('.import'), class:"text-lg w-full inline-flex items-center justify-center h-12 gap-2 px-6 font-medium tracking-wide text-white transition duration-300 rounded focus-visible:outline-none whitespace-nowrap bg-emerald-500 hover:bg-emerald-600 focus:bg-emerald-700 disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none" %>
+    </div>
+  <% end %>
+</section>

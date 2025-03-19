@@ -16,7 +16,7 @@ describe 'Admin request report', type: :system do
     allow(ProcessImportedFileJob).to receive(:perform_later)
     allow(ProcessImportLineJob).to receive(:perform_later)
     batch = [
-      "U,usuario1@example.com, , password456, Fulano, da Silva",
+      "U,usuario1@example.com, Fulano, da Silva",
       "E,,https://www.empresa-a.com,contato@empresa-a.com,",
       "V,Desenvolvedor Ruby on Rails,,brl,monthly,remote,,São Paulo,,,Estamos contratando Dev. Rails Júnior"
     ]
@@ -44,9 +44,9 @@ describe 'Admin request report', type: :system do
     tmp_file_path = Rails.root.join('tmp/capybara/Base de dados 01_01-relatório.txt')
     expect(File.exist?(tmp_file_path)).to be_truthy
     file_content = File.read(tmp_file_path)
-    expect(file_content).to include("1 - U,usuario1@example.com, , password456, Fulano, da Silva - Senha não pode ficar em branco, Confirmação de Senha não é igual a Senha e Senha é muito curto (mínimo: 6 caracteres")
-    expect(file_content).to include("2 - E,,https://www.empresa-a.com,contato@empresa-a.com, - User é obrigatório(a) e Nome não pode ficar em branco")
-    expect(file_content).to include("3 - V,Desenvolvedor Ruby on Rails,,brl,monthly,remote,,São Paulo,,,Estamos contratando Dev. Rails Júnior - Company profile é obrigatório(a), Job type é obrigatório(a), Experience level é obrigatório(a), Salário não pode ficar em branco e Company profile não pode ficar em branco")
+    expect(file_content).not_to include("1 - U,usuario1@example.com, Fulano, da Silva")
+    expect(file_content).to include("2 - E,,https://www.empresa-a.com,contato@empresa-a.com, - Linha não processada: User ID '' não é um número válido.")
+    expect(file_content).to include("3 - V,Desenvolvedor Ruby on Rails,,brl,monthly,remote,,São Paulo,,,Estamos contratando Dev. Rails Júnior - Linha não processada: Job Type ID '' não é um número válido.")
     ActiveJob::Base.queue_adapter = :test
   end
 end

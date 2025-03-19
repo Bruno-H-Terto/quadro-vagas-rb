@@ -15,6 +15,10 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6 }
   validate :email_address_is_not_equal_to_any_company_email, if: :email_address_present?
 
+  def self.generate_random_password
+    SecureRandom.alphanumeric(8)
+  end
+
   private
   def email_address_present?
     self.email_address.present?

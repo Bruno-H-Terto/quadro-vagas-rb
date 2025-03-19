@@ -1,11 +1,17 @@
 <div id="dashboard" data-controller="loading" data-loading-total=<%= imported_file.total_lines %>>
   <!-- Elemento de Carregamento -->
-  <div class="loading" data-loading-target="loading">
-     <div class="spinner">Carregando...</div>
+  <div class="loading flex flex-col gap-3 justify-items-center mt-3" data-loading-target="loading">
+     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-labelledby="title-04a desc-04a" aria-live="polite" aria-busy="true" class="w-10 h-10 animate animate-spin">
+        <title id="title-04a">Carregamento</title>
+        <desc id="desc-04a">Aguarde alguns instantes...</desc>
+        <circle cx="12" cy="12" r="10" class="stroke-slate-200" stroke-width="4" />
+        <path d="M12 22C14.6522 22 17.1957 20.9464 19.0711 19.0711C20.9464 17.1957 22 14.6522 22 12C22 9.34784 20.9464 6.8043 19.0711 4.92893C17.1957 3.05357 14.6522 2 12 2" class="stroke-emerald-500" stroke-width="4" />
+      </svg>
+     <div class="text-sm font-semibold">Carregando...</div>
   </div>
 
-  <div data-loading-target="content">
-    <div>
+  <div data-loading-target="content" class="flex gap-5">
+    <div class="py-2 mt-3">
       <div>
         Instruções realizadas <%= imported_file.complete_lines %> de <%= imported_file.total_lines %>
       </div>
@@ -17,59 +23,17 @@
         Falha: <%= imported_file.import_line_reports.failed.count %>
       </div>
     </div>
-
-    <div data-controller="chart" data-chart-success="<%= imported_file.import_line_reports.success.count %>"
-        data-chart-failed="<%= imported_file.import_line_reports.failed.count %>">
-      <div class="chart" data-chart-target="chart">
-        <div class="bar success" title=<%= imported_file.import_line_reports.success.count %>></div>
-        <div class="bar failed" title=<%= imported_file.import_line_reports.failed.count %>></div>
-      </div>
-    </div>
   </div>
 
-  <div id="reports" data-controller="report" data-report-status=<%= imported_file.complete? %>>
-    <div data-report-target = "btn">
-      <div>Relatório</div>
-      <div>
+  <div id="reports" class="mt-3 flex flex-col" data-controller="report" data-report-status=<%= imported_file.complete? %>>
+    <div data-report-target = "reportArea">
+      <span class="text-green-700 text-lg">Relatório</span>
+      <div class="flex flex-col font-semibold">
         <span>Usuário gerados <%= imported_file.success_user %></span>
         <span>Empresas geradas <%= imported_file.success_company_profile %></span>
         <span>Vagas geradas <%= imported_file.success_job_posting %></span>
       </div>
-      <%= link_to "Imprimir relatório", download_report_txt_path(imported_file_id: imported_file.id) %>
-    </div>
-    
-    <div>
-      <% imported_file.import_line_reports.failed.sort_by(&:line).each do |line| %>
-        <div>
-          <%= line.line %> <%= line.message %>
-        </div>
-      <% end %>
+      <%= link_to "Imprimir relatório", download_report_txt_path(imported_file_id: imported_file.id), class:"mt-3 inline-flex items-center justify-center h-12 gap-2 px-6 text-sm font-medium tracking-wide text-white transition duration-300 rounded focus-visible:outline-none whitespace-nowrap bg-emerald-500 hover:bg-emerald-600 focus:bg-emerald-700 disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none" %>
     </div>
   </div>
 </div>
-
-
-<style>
-.chart {
-  margin-top: 3rem;
-  display: flex;
-  height: 300px; /* Tamanho da altura do gráfico */
-  width: 100%;
-  gap: 1rem; /* Espaçar as colunas */
-  align-items: baseline;
-}
-
-.bar {
-  width: 40px; /* Largura de cada coluna */
-  display: block;
-}
-
-.success {
-  background-color: rgba(54, 162, 235, 0.7); /* Cor para sucesso */
-}
-
-.failed {
-  background-color: rgba(255, 99, 132, 0.7); /* Cor para falha */
-}
-
-</style>

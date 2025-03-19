@@ -1,3 +1,3 @@
-U,test@email.com,password123,password123,Fulano,da Silva
+U,test@email.com,Fulano,da Silva
 E,Empresa A,https://www.empresa-a.com,contato@empresa-a.com,1
 V,Desenvolvedor Ruby on Rails,5000,brl,monthly,remote,1,São Paulo,2,1,Estamos contratando Dev. Rails Júnior
