@@ -21,7 +21,7 @@ describe ProcessImportLineJob, type: :job do
     imported_file = admin.imported_files.build(name: "Relatório Trimestral")
     imported_file.data.attach(io: File.open(file), filename: "import_data.txt")
     imported_file.save!
-    first_batch = [ "U,usuario1@example.com, password456, password456, Fulano, da Silva" ]
+    first_batch = [ "U,usuario1@example.com, Fulano, da Silva" ]
 
     ProcessImportLineJob.perform_now(batch: first_batch, line: 1, imported_file: imported_file)
 
@@ -30,7 +30,7 @@ describe ProcessImportLineJob, type: :job do
     expect(user.email_address).to eq("usuario1@example.com")
     expect(user.name).to eq("Fulano")
     expect(user.last_name).to eq("da Silva")
-    expect(report_line.command).to eq("U,usuario1@example.com, password456, password456, Fulano, da Silva")
+    expect(report_line.command).to eq("U,usuario1@example.com, Fulano, da Silva")
     expect(report_line.line).to eq(1)
     expect(report_line.success?).to eq(true)
     expect(report_line.imported_file).to eq(imported_file)
@@ -118,15 +118,15 @@ describe ProcessImportLineJob, type: :job do
     expect(reports[0].failed?).to eq true
     expect(reports[0].command).to eq "H,usuario2@example.com"
     expect(reports[1].line).to eq 2
-    expect(reports[1].message).to eq "Senha não pode ficar em branco, Nome não pode ficar em branco, Sobrenome não pode ficar em branco, Confirmação de Senha não pode ficar em branco, E-mail não é válido e Senha é muito curto (mínimo: 6 caracteres)"
+    expect(reports[1].message).to eq "Nome não pode ficar em branco, Sobrenome não pode ficar em branco e E-mail não é válido"
     expect(reports[1].failed?).to eq true
     expect(reports[1].command).to eq "U,usuario1.com"
     expect(reports[2].line).to eq 3
-    expect(reports[2].message).to eq "User é obrigatório(a) e Nome não pode ficar em branco"
+    expect(reports[2].message).to eq "Linha não processada: User ID '' não é um número válido."
     expect(reports[2].failed?).to eq true
     expect(reports[2].command).to eq "E,,https://www.empresa-a.com,contato@empresa-a.com,"
     expect(reports[3].line).to eq 4
-    expect(reports[3].message).to eq "Company profile é obrigatório(a), Experience level é obrigatório(a), Company profile não pode ficar em branco, Arranjo de trabalho não pode ficar em branco e Descrição não pode ficar em branco"
+    expect(reports[3].message).to eq "Linha não processada: Experience Level ID '' não é um número válido."
     expect(reports[3].failed?).to eq true
     expect(reports[3].command).to eq "V,Desenvolvedor Ruby on Rails,R$ 5000,brl,monthly,,1,São Paulo,,"
   end

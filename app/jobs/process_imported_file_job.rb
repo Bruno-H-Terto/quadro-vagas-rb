@@ -1,7 +1,7 @@
 class ProcessImportedFileJob < ApplicationJob
   queue_as :default
 
-  BATCH_SIZE = 100
+  BATCH_SIZE = 5
 
   def perform(file_id:)
     imported_file = ImportedFile.find(file_id)

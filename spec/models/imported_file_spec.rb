@@ -37,7 +37,7 @@ RSpec.describe ImportedFile, type: :model do
     end
   end
 
-  context '.complete?' do
+  context '#complete?' do
     it 'should return true if complete lines and total lines are equal' do
       admin = create(:user, role: 'admin')
       file = Rails.root.join('./spec/fixtures/files/import_data.txt')
@@ -57,7 +57,7 @@ RSpec.describe ImportedFile, type: :model do
     end
   end
 
-  context '.reports_failed' do
+  context '#reports_failed' do
     it 'should return all import lines report that failed' do
       admin = create(:user, role: 'admin')
       file = Rails.root.join('./spec/fixtures/files/import_data.txt')

@@ -7,7 +7,7 @@ describe 'Admin requests report', type: :request do
     imported_file = admin.imported_files.build(name: 'Base', data: Rack::Test::UploadedFile.new(file_path, 'text/plain'), total_lines: 3)
     imported_file.save!
     batch = [
-      "U,usuario1@example.com, , password456, Fulano, da Silva",
+      "U,usuario1@example.com, Fulano, da Silva",
       "E,,https://www.empresa-a.com,contato@empresa-a.com,",
       "V,Desenvolvedor Ruby on Rails,,brl,monthly,remote,,São Paulo,,,Estamos contratando Dev. Rails Júnior"
     ]
@@ -18,9 +18,9 @@ describe 'Admin requests report', type: :request do
 
     expect(response.headers['Content-Type']).to eq('text/plain')
     file_content = response.body
-    expect(file_content).to include("1 - U,usuario1@example.com, , password456, Fulano, da Silva - Senha não pode ficar em branco")
-    expect(file_content).to include("2 - E,,https://www.empresa-a.com,contato@empresa-a.com, - User é obrigatório(a)")
-    expect(file_content).to include("3 - V,Desenvolvedor Ruby on Rails,,brl,monthly,remote,,São Paulo,,,Estamos contratando Dev. Rails Júnior - Company profile é obrigatório(a)")
+    expect(file_content).not_to include("1 - U,usuario1@example.com, Fulano, da Silva")
+    expect(file_content).to include("2 - E,,https://www.empresa-a.com,contato@empresa-a.com, - Linha não processada: User ID '' não é um número válido.")
+    expect(file_content).to include("3 - V,Desenvolvedor Ruby on Rails,,brl,monthly,remote,,São Paulo,,,Estamos contratando Dev. Rails Júnior - Linha não processada: Job Type ID '' não é um número válido.")
   end
 
   it 'must be authenticated' do

@@ -49,7 +49,7 @@ describe 'Admin imports a file', type: :system do
     allow(ProcessImportedFileJob).to receive(:perform_later)
     allow(ProcessImportLineJob).to receive(:perform_later)
     batch = [
-      "U,usuario1@example.com, password456, password456, Fulano, da Silva",
+      "U,usuario1@example.com, Fulano, da Silva",
       "E,Empresa A,https://www.empresa-a.com,contato@empresa-a.com,#{user.id}",
       "V,Desenvolvedor Ruby on Rails,5000,brl,monthly,remote,#{JobType.first.id},São Paulo,#{ExperienceLevel.first.id},#{company.id},Estamos contratando Dev. Rails Júnior"
     ]

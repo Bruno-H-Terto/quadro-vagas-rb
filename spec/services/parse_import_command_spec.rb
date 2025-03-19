@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe ParseImportCommandService do
   it 'parses user command correctly' do
-    instruction_line = "U, usuario@example.com, password123, password123, Fulano, Silva"
+    instruction_line = "U, usuario@example.com, Fulano, Silva"
     result = described_class.call(instruction_line: instruction_line)
 
     expected_type = "U"
-    expected_instruction = [ "usuario@example.com", "password123", "password123", "Fulano", "Silva" ]
+    expected_instruction = [ "usuario@example.com", "Fulano", "Silva" ]
 
     expect(result).to eq([ expected_type, expected_instruction ])
   end
@@ -34,11 +34,11 @@ RSpec.describe ParseImportCommandService do
   end
 
   it 'removes extra spaces in each field' do
-    instruction_line = "U,   usuario@example.com ,  password123  , password123   ,   Fulano  ,  Silva  "
+    instruction_line = "U,   usuario@example.com ,Fulano  ,  Silva  "
     result = described_class.call(instruction_line: instruction_line)
 
     expected_type = "U"
-    expected_instruction = [ "usuario@example.com", "password123", "password123", "Fulano", "Silva" ]
+    expected_instruction = [ "usuario@example.com", "Fulano", "Silva" ]
 
     expect(result).to eq([ expected_type, expected_instruction ])
   end

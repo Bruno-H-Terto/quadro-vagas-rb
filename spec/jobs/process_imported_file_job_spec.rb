@@ -19,7 +19,7 @@ describe ProcessImportedFileJob, type: :job do
     ProcessImportedFileJob.perform_now(file_id: imported_file.id)
 
     expect(imported_file.reload.total_lines).to eq 105
-    expect(enqueued_jobs.size).to eq(2)
-    expect(enqueued_jobs.select { |job| job[:job] == ProcessImportLineJob }.size).to eq(2)
+    expect(enqueued_jobs.size).to eq(21)
+    expect(enqueued_jobs.select { |job| job[:job] == ProcessImportLineJob }.size).to eq(21)
   end
 end

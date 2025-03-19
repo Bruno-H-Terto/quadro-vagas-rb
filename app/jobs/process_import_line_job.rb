@@ -27,22 +27,29 @@ class ProcessImportLineJob < ApplicationJob
   private
 
   def new_record(type:, instruction:)
-    case type.downcase
-    when "u", "e", "v"
-      record = NewRecordService.call(type: type, instruction: instruction)
+    error = nil
+    status = false
+
+    if %w[u e v].include?(type.downcase)
+      record_response = NewRecordService.call(type: type, instruction: instruction)
+      record = record_response[:object]
+
+      if record
+        begin
+          status = record.save
+        rescue StandardError => e
+          error = e.message
+        end
+      else
+        error = record_response[:error] || "Erro desconhecido ao criar o registro."
+      end
     else
       error = "Tipo inválido"
     end
 
-    begin
-      status = record.save if record
-    rescue => exception
-      status = false
-      error = exception
-    end
-
-    { record: record, status: status, error: error || nil }
+    { record: record, status: status, error: error }
   end
+
 
   def report_generate(new_record:, type:, command:, line:, imported_file:)
     if new_record[:status]

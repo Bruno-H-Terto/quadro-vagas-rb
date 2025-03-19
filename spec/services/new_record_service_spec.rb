@@ -3,16 +3,18 @@ require 'rails_helper'
 RSpec.describe NewRecordService, type: :service do
   describe '#call' do
     it 'creates a new user object' do
-      user_data = [ "usuario@example.com", "senha123", "senha123", "Fulano", "da Silva" ]
+      allow(User).to receive(:generate_random_password).and_return('senha123')
+      user_data = [ "usuario@example.com", "Fulano", "da Silva" ]
 
       result = NewRecordService.call(instruction: user_data, type: 'u')
 
-      expect(result).to be_a(User)
-      expect(result.email_address).to eq("usuario@example.com")
-      expect(result.password).to eq("senha123")
-      expect(result.password_confirmation).to eq("senha123")
-      expect(result.name).to eq("Fulano")
-      expect(result.last_name).to eq("da Silva")
+      expect(result[:object]).to be_a(User)
+      expect(result[:object].email_address).to eq("usuario@example.com")
+      expect(result[:object].password).to eq("senha123")
+      expect(result[:object].password_confirmation).to eq("senha123")
+      expect(result[:object].name).to eq("Fulano")
+      expect(result[:object].last_name).to eq("da Silva")
+      expect(result[:error]).to be_nil
     end
 
     it 'creates a new company profile object' do
@@ -21,42 +23,44 @@ RSpec.describe NewRecordService, type: :service do
 
       result = NewRecordService.call(instruction: company_data, type: 'e')
 
-      expect(result).to be_a(CompanyProfile)
-      expect(result.name).to eq("Empresa X")
-      expect(result.website_url).to eq("https://www.empresa-x.com")
-      expect(result.contact_email).to eq("contato@empresa-x.com")
-      expect(result.user_id).to eq(user.id)
-      expect(result.logo).to be_attached
+      expect(result[:object]).to be_a(CompanyProfile)
+      expect(result[:object].name).to eq("Empresa X")
+      expect(result[:object].website_url).to eq("https://www.empresa-x.com")
+      expect(result[:object].contact_email).to eq("contato@empresa-x.com")
+      expect(result[:object].user_id).to eq(user.id)
+      expect(result[:error]).to be_nil
     end
 
     it 'creates a new job posting object' do
       company = create(:company_profile)
       job_data = [
-        "Desenvolvedor Ruby", "5000", "brl", "monthly", "remote",
+        "Desenvolvedor Ruby", 5000, "brl", "monthly", "remote",
         1, "São Paulo", 2, company.id, "Estamos contratando Dev. Ruby"
       ]
 
       result = NewRecordService.call(instruction: job_data, type: 'v')
 
-      expect(result).to be_a(JobPosting)
-      expect(result.title).to eq("Desenvolvedor Ruby")
-      expect(result.salary).to eq(5000)
-      expect(result.salary_currency).to eq("brl")
-      expect(result.salary_period).to eq("monthly")
-      expect(result.work_arrangement).to eq("remote")
-      expect(result.job_type_id).to eq(1)
-      expect(result.job_location).to eq("São Paulo")
-      expect(result.experience_level_id).to eq(2)
-      expect(result.company_profile_id).to eq(company.id)
-      expect(result.description.to_plain_text).to eq("Estamos contratando Dev. Ruby")
+      expect(result[:object]).to be_a(JobPosting)
+      expect(result[:object].title).to eq("Desenvolvedor Ruby")
+      expect(result[:object].salary).to eq(5000)
+      expect(result[:object].salary_currency).to eq("brl")
+      expect(result[:object].salary_period).to eq("monthly")
+      expect(result[:object].work_arrangement).to eq("remote")
+      expect(result[:object].job_type_id).to eq(1)
+      expect(result[:object].job_location).to eq("São Paulo")
+      expect(result[:object].experience_level_id).to eq(2)
+      expect(result[:object].company_profile_id).to eq(company.id)
+      expect(result[:object].description.to_plain_text).to eq("Estamos contratando Dev. Ruby")
+      expect(result[:error]).to be_nil
     end
 
-    it 'returns nil for an unknown type' do
-      invalid_data = [ "Dado inválido" ]
+    it 'returns an error for an unknown type' do
+      company_data = [ "Empresa X", "https://www.empresa-x.com", "contato@empresa-x.com", 'Invalid' ]
 
-      result = NewRecordService.call(instruction: invalid_data, type: 'x')
+      result = NewRecordService.call(instruction: company_data, type: 'e')
 
-      expect(result).to be_nil
+      expect(result[:error]).to eq "User ID 'Invalid' não é um número válido."
+      expect(result[:object]).to be_nil
     end
   end
 end
